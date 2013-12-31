@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $WORKSPACE
+cd $WORKSPACE_PATH
 echo "Preparing to deploy $APPLICATION..."
 for server in $DEPLOY_SERVERS; do
   echo "Deploying code to $server..."
@@ -8,7 +8,7 @@ for server in $DEPLOY_SERVERS; do
     --exclude="*.md" \
     --exclude=".git*" \
     --exclude="tests" \
-    $WORKSPACE/* \
+    $WORKSPACE_PATH/* \
     $DEPLOY_USER@$server:$DEPLOY_PATH
   echo "Done deploying code to $server."
 done

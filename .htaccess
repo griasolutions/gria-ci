@@ -1,4 +1,4 @@
-<Files "^(config\.ini|bin|library|phpunit\.xml|tests)$">
+<Files "^(bin|ci\.lock|config|library)$">
   Order Allow,Deny
   Deny from all
 </Files>
