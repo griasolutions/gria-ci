@@ -1,6 +1,6 @@
 <?php
 
-namespace Gria;
+namespace GriaCi;
 
 class Configurable
 {

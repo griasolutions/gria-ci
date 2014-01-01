@@ -8,6 +8,8 @@ for server in $DEPLOY_SERVERS; do
     --exclude="*.md" \
     --exclude=".git*" \
     --exclude="tests" \
+    --exclude="reports" \
+    --exclude="*.log" \
     $WORKSPACE_PATH/* \
     $DEPLOY_USER@$server:$DEPLOY_PATH
   echo "Done deploying code to $server."
