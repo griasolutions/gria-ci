@@ -1,18 +1,17 @@
 <?php
 
-
-namespace GriaCi;
+namespace GriaCi\Config;
 
 class Configurable
 {
 
-	/** @var \GriaCi\Config **/
+	/** @var \GriaCi\Config\Config **/
 	private $_config;
 
 	/**
-	* @param \GriaCi\Config $config
+	* @param \GriaCi\Config\Config $config
 	*/
-	public function __construct(\GriaCi\Config $config)
+	public function __construct(Config $config)
 	{
 		$this->_config = $config;
 	}
