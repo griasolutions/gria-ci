@@ -13,10 +13,13 @@ class Request
 {
 
 	/** @var string */
-	private $_url;
+	private $_host;
 
 	/** @var string */
 	private $_uri;
+
+	/** @var string */
+	private $_url;
 
 	/** @var string */
 	private $_controllerName;
@@ -26,12 +29,8 @@ class Request
 	 */
 	public function __construct()
 	{
-		$url = 'http://'
-			. filter_input(INPUT_SERVER, 'HTTP_HOST')
-			. filter_input(INPUT_SERVER, 'REQUEST_URI');
+		$url = 'http://' . $this->getHost() . $this->getUri();
 		$this->_url = $url;
-		$urlParts = parse_url($url);
-		$this->_uri = $urlParts['path'];
 	}
 
 	/**
@@ -45,17 +44,32 @@ class Request
 	/**
 	 * @return string
 	 */
-	public function getUrl()
+	public function getHost()
 	{
-		return $this->_url;
+		if (!$this->_host) {
+			$this->_host = filter_input(INPUT_SERVER, 'HTTP_HOST');
+		}
+		return $this->_host;
 	}
+
 
 	/**
 	 * @return string
 	 */
 	public function getUri()
 	{
+		if (!$this->_uri) {
+			$this->_uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
+		}
 		return $this->_uri;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUrl()
+	{
+		return $this->_url;
 	}
 
 	/**

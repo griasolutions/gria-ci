@@ -45,7 +45,7 @@ class Controller implements ControllerInterface
 	 */
 	public function getRequest()
 	{
-
+		return $this->_request;
 	}
 
 } 

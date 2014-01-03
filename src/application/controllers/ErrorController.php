@@ -1,19 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 12:22 PM
- */
+namespace Application;
 
-namespace GriaCi\Application;
+use \GriaCi\Controller;
 
-class ErrorController extends \GriaCi\Controller\ErrorController
+class ErrorController extends Controller\ErrorController
 {
 
-	public function route()
+ 	public function route()
 	{
 		die('Nope!');
 	}
 
-} 
+}
