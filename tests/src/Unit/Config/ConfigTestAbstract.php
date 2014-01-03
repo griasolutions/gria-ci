@@ -12,6 +12,7 @@ use \GriaCi\Config;
 
 abstract class ConfigTestAbstract extends \PHPUnit_Framework_TestCase
 {
+	/** @var \GriaCi\Config\Config */
 	private $_config;
 
 	public function setUp()
@@ -19,6 +20,9 @@ abstract class ConfigTestAbstract extends \PHPUnit_Framework_TestCase
 		$this->_config = new Config\Config('tests/fixtures/config/test.ini');
 	}
 
+	/**
+	 * @return \GriaCi\Config\Config
+	 */
 	public function getConfig()
 	{
 		return $this->_config;

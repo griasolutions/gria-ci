@@ -17,7 +17,7 @@ class Configurable
 	}
 
 	/**
-	* @return \GriaCi\Config
+	* @return \GriaCi\Config\Config
 	*/
 	public function getConfig()
 	{

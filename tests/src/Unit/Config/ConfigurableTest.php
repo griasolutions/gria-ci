@@ -17,8 +17,7 @@ class ConfigurableTest extends ConfigTestAbstract
 
 	public function testGetConfig()
 	{
-		$config = $this->getConfigurable();
-		$this->assertInstanceOf('\GriaCi\Config\Config', $this->getConfig());
+		$this->assertInstanceOf('\GriaCi\Config\Config', $this->$this->getConfigurable()->getConfig());
 	}
 
 	public function getConfigurable()
