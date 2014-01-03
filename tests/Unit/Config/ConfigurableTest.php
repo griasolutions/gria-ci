@@ -2,4 +2,4 @@
 
 namespace ApplicationTest;
 
-class ConfigurableTest extends PHP
+class ConfigurableTest extends
