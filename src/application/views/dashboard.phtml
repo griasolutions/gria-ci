@@ -1,70 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
-	<title>Dashboard | Gria CI</title>
-
-	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:500,300,100">
-	<link rel="stylesheet" href="/assets/css/style.css">
-
-	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-	<![endif]-->
-</head>
-
-<body>
-
-<!-- Wrap all page content here -->
-<div id="wrap">
-
-	<!-- Fixed navbar -->
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#">Gria/<strong>CI</strong></a>
-			</div>
-			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Dashboard</a></li>
-					<li><a href="#">About</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Download recent logs</a></li>
-							<li class="divider"></li>
-							<li class="dropdown-header">Projects</li>
-							<li><a href="#">guillermo, out of repose</a></li>
-						</ul>
-					</li>
-				</ul>
-			</div><!--/.nav-collapse -->
-		</div>
-	</div>
-
-	<!-- Begin page content -->
-	<div id="main" class="container">
-
-		<div class="alert alert-warning alert-dismissable">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-			<strong>Warning!</strong> Best check yo self, you're not looking too good.
-		</div>
-
+<?php $this->render('header'); ?>
 		<!-- Intro message -->
 		<div class="jumbotron">
 			<h1><span class="label label-success">100%</span> is your current success rate.</h1>
@@ -86,15 +20,19 @@
 			<div class="tab-pane active" id="recent-jobs">
 				<table class="table table-striped">
 					<tr>
+						<th>Job #</th>
+						<th>Job Name</th>
 						<th>Project</th>
 						<th>Status</th>
 						<th colspan="2">Notes</th>
 					</tr>
 					<?php for($i=0; $i<10; $i++) : ?>
 					<tr>
-						<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> guillermo, out of repose</button></td>
+						<td><?php echo (10-$i); ?></td>
+						<td>Build and Test</td>
+						<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> griasolutions/gria-lib</button></td>
 						<td><span class="label label-success">All love, son!</span></td>
-						<td>Triggered by commit <code>9043as213d33</code> on 1/25/2014 at 10:30 PM EST<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
+						<td>Triggered by commit <code>9043as213d33</code> 2 minutes ago<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
 						<td>
 							<div class="btn-group btn-group">
 								<button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-play-circle"></span> Run</button>
@@ -108,13 +46,17 @@
 			<div class="tab-pane" id="queue">
 				<table class="table table-striped">
 					<tr>
+						<th>Job #</th>
+						<th>Job Name</th>
 						<th>Project</th>
 						<th colspan="2">Notes</th>
 					</tr>
 					<?php for($i=0; $i<10; $i++) : ?>
 						<tr>
-							<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> guillermo, out of repose</button></td>
-							<td>Triggered by commit <code>9043as213d33</code> on 1/25/2014 at 10:30 PM EST<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
+							<td><?php echo (10-$i); ?></td>
+							<td>Build and Test</td>
+							<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> griasolutions/gria-lib</button></td>
+							<td>Triggered by commit <code>9043as213d33</code> 2 minutes ago<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
 							<td><button type="button" class="btn btn-default btn-danger"><span class="glyphicon glyphicon-minus-sign"></span> Dequeue</button></td>
 						</tr>
 					<?php endfor; ?>
@@ -123,13 +65,17 @@
 			<div class="tab-pane" id="failures">
 				<table class="table table-striped">
 					<tr>
+						<th>Job #</th>
+						<th>Job Name</th>
 						<th>Project</th>
 						<th colspan="2">Notes</th>
 					</tr>
 					<?php for($i=0; $i<10; $i++) : ?>
 						<tr>
-							<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> guillermo, out of repose</button></td>
-							<td>Triggered by commit <code>9043as213d33</code> on 1/25/2014 at 10:30 PM EST<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
+							<td><?php echo (10-$i); ?></td>
+							<td>Build and Test</td>
+							<td><strong class="project-title"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-new-window"></span> griasolutions/gria-ci</button></td>
+							<td>Triggered by commit <code>9043as213d33</code> 2 minutes ago<br/><small>Build ran in 30 seconds. Took a bit long, no?</small></td>
 							<td>
 								<div class="btn-group btn-group">
 									<button type="button" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-play-circle"></span> Run</button>
@@ -144,130 +90,6 @@
 	</div>
 </div>
 
-<div id="footer">
-	<div class="container">
-		<p class="text-muted">Place sticky footer content here.</p>
-	</div>
-</div>
+<?php $this->render('reports-modal'); ?>
+<?php $this->render('footer'); ?>
 
-<!-- Modal -->
-<div class="modal fade" id="log-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="myModalLabel">Job Log</h4>
-			</div>
-			<div class="modal-body">
-				<pre class="pre-scrollable">
-#!/bin/bash
-
-# Path for build files
-BUILD_PATH=$WORKSPACE_PATH/.ci
-
-# Path for build number
-BUILD_NUMBER_PATH=$BUILD_PATH/build.number
-
-# Increment the build number
-if [ -f $BUILD_NUMBER_PATH ]; then
-  TMP_BUILD_NUMBER=`more $BUILD_NUMBER_PATH`
-  BUILD_NUMBER=`expr $TMP_BUILD_NUMBER + 1`
-else
-  mkdir -m 0775 -p $BUILD_PATH
-  touch $BUILD_NUMBER_PATH
-  BUILD_NUMBER=1
-fi
-echo $BUILD_NUMBER > $BUILD_NUMBER_PATH
-
-# Path for logs and reports
-REPORT_PATH=$BUILD_PATH/reports/$BUILD_NUMBER
-
-# Log the status of the build
-function log_status
-{
-  BUILD_TIME=`date +"%c"`
-  STATUS_PATH=$BUILD_PATH/status.log
-  if [ -f $STATUS_PATH ]; then
-    touch $STATUS_PATH
-  fi
-  echo "Build $BUILD_NUMBER of $APPLICATION finished at $BUILD_TIME with the following status: $1." >> $STATUS_PATH
-}
-
-# Handles errors... http://stackoverflow.com/questions/64786/error-handling-in-bash
-function error_exit
-{
-  echo "An error occured: ${1:-"Unknown Error"}" 1>&2
-  echo "Exiting script."
-  log_status "failure"
-  exit 1
-}
-
-# Get started
-echo "Building $APPLICATION..."
-
-# Clone the repository
-echo "Pulling down code changes..."
-if [ -d $WORKSPACE_PATH/.git ]; then
-  cd $WORKSPACE_PATH
-  git pull origin master
-else
-  git clone --recursive $REPOSITORY_URL $WORKSPACE_PATH.tmp && mv $WORKSPACE_PATH.tmp/* $WORKSPACE_PATH.tmp/.git $WORKSPACE_PATH && rm -rf $WORKSPACE_PATH.tmp
-fi
-if [ "$?" = "0" ]; then
-  echo "Done pulling down changes."
-else
-  error_exit "Could not pull down changes from the remote repository."
-fi
-
-# Pull down dependencies
-if [ -f $WORKSPACE_PATH/composer.json ]; then
-  echo "Pulling down dependencies..."
-  php bin/composer.phar install
-  echo "Done pulling down dependencies."
-fi
-
-# Analyze code & generate reports
-echo "Generating folders for reports..."
-cd $WORKSPACE_PATH
-mkdir -m 0775 -p $REPORT_PATH
-echo "Done generating folders for reports."
-
-# Run lint to check for errors
-echo "Running lint..."
-find -L $WORKSPACE_PATH -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l > $REPORT_PATH/lint.log
-if [ "$?" = "0" ]; then
-  echo "Done running lint on all PHP files. Log file generated."
-else
-  error_exit "Errors were found running lint on PHP files."
-fi
-
-# Run tests if a configuration file exists
-if [ -f $WORKSPACE_PATH/phpunit.xml.dist ]; then
-  echo "Running tests..."
-  cd tests
-  cat $WORKSPACE_PATH/phpunit.xml.dist | sed -e 's/ENV\"\ value=\"test\"/ENV\"\ value=\"build\"/g' > phpunit.xml
-  phpunit --log-junit=$REPORT_PATH/junit.xml -dxdebug.coverage_enable=1 --coverage-clover=$REPORT_PATH/clovercoverage.xml
-  if [ "$?" = "0" ]; then
-    echo "Done running tests. Code coverage report generated."
-  else
-    error_exit "Errors occurred while running tests."
-  fi
-fi
-
-# Finish
-echo "Build successfully completed!"
-log_status "success"
-exit 0
-				</pre>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
-</body>
-</html>

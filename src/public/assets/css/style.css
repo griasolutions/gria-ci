@@ -48,6 +48,7 @@
 }
 
 #dashboard-views .tab-pane table th {
+    font-size: 90%;
     text-transform: uppercase;
 }
 
@@ -82,5 +83,8 @@
     border-radius: 0;
     color: #ddd;
     margin: 0;
+}
 
+#footer {
+    text-align: center;
 }
