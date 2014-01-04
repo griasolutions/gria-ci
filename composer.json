@@ -3,7 +3,9 @@
 	"require": {
 		"php": ">=5.4.0",
 		"knplabs/github-api": "*",
-		"austinhyde/iniparser": "*"
+		"austinhyde/iniparser": "*",
+		"squizlabs/php_codesniffer": "1.*",
+		"phpmd/phpmd": "1.4.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7"
