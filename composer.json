@@ -3,7 +3,7 @@
 	"require": {
 		"php": ">=5.4.0",
 		"knplabs/github-api": "@dev",
-		"austinhyde/iniparser": "*",
+		"austinhyde/iniparser": "@dev",
 		"squizlabs/php_codesniffer": "1.*",
 		"phpmd/phpmd": "1.4.*"
 	},
