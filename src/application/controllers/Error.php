@@ -1,9 +1,9 @@
 <?php
-namespace Application;
+namespace Application\Controller;
 
 use \GriaCi\Controller;
 
-class ErrorController extends Controller\ErrorController
+class Error extends Controller\ErrorController
 {
 
  	public function route()

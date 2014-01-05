@@ -1,9 +1,9 @@
 <?php
-namespace Application;
+namespace Application\Controller;
 
 use \GriaCi\Controller;
 
-class DashboardController extends Controller\Controller
+class Dashboard extends Controller\Controller
 {
 	public function route()
 	{

@@ -1,6 +1,6 @@
 <?php
 
-namespace GriaCi\Command;
+namespace GriaCi\Cli;
 
 use \GriaCi\Config;
 // APPLICATION=WP-Write WORKSPACE_PATH=`pwd`/wp-write REPOSITORY_URL=git@bitbucket.org:guillermoandrae/wp-write.git ~/Sites/gria-ci/bin/build.sh
@@ -10,7 +10,7 @@ abstract class Command extends Config\Configurable
 
   private $_scriptPath;
 
-  public function __construct(\GriaCi\Config $config)
+  public function __construct(Config\Config $config)
   {
     parent::__construct($config);
     $this->init();

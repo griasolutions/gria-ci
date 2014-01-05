@@ -1,9 +1,11 @@
 <?php
 
-namespace GriaCi;
+namespace GriaCi\Cli;
 // APPLICATION=WP-Write WORKSPACE_PATH=`pwd`/wp-write REPOSITORY_URL=git@bitbucket.org:guillermoandrae/wp-write.git ~/Sites/gria-ci/bin/build.sh
 
-abstract class LockableCommand extends Configurable
+use \GriaCi\Config;
+
+abstract class LockableCommand extends Config\Configurable
 {
 
   const NUM_MAX_EXECUTION_ATTEMPTS = 3;
@@ -14,7 +16,7 @@ abstract class LockableCommand extends Configurable
 
   private $_lockPath;
 
-  public function __construct(\GriaCi\Config $config)
+  public function __construct(Config\Config $config)
   {
     parent::__construct($config);
     $this->_lockPath = '';

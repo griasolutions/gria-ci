@@ -40,7 +40,7 @@ class Dispatcher
 	{
 		if (!$this->_controller) {
 			$request = $this->getRequest();
-			$controllerName = 'Application\\' . ucfirst($request->getControllerName()) . 'Controller';
+			$controllerName = 'Application\Controller\\' . ucfirst($request->getControllerName());
 			try {
 				$controller = new $controllerName($request);
 			} catch (\Exception $ex) {

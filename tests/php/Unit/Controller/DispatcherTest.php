@@ -30,7 +30,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 			->method('getControllerName')
 			->will($this->returnValue('dashboard'));
 		$dispatcher = new Controller\Dispatcher($this->getRequest());
-		$this->assertInstanceOf('\Application\DashboardController', $dispatcher->getController());
+		$this->assertInstanceOf('\Application\Controller\Dashboard', $dispatcher->getController());
 	}
 
 	public function getRequest()

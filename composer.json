@@ -15,8 +15,9 @@
 	"autoload": {
 		"psr-4": {
 			"GriaCi\\": "src/library/",
-			"Application\\": "src/application/controllers/",
-			"ApplicationTest\\": "tests/src/"
+			"Application\\Controller\\": "src/application/controllers/",
+			"Application\\Job\\": "src/application/jobs/",
+			"ApplicationTest\\": "tests/php/"
 		}
 	}
 }
