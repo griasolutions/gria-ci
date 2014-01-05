@@ -10,4 +10,4 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require 'vendor/autoload.php';
 
 // dispatch the call
-(new \GriaCi\Controller\Dispatcher(new \GriaCi\Controller\Request()))->run();
+(new \Gria\Controller\Dispatcher(new \Gria\Controller\Request()))->run();

@@ -1,14 +1,15 @@
 <?php
 namespace Application\Controller;
 
-use \GriaCi\Controller;
+use \Gria\Controller;
 
 class Error extends Controller\ErrorController
 {
 
- 	public function route()
+	public function route()
 	{
-		die('Nope!');
+		parent::route();
+		$this->getResponse()->setBody('Nope!');
 	}
 
 }

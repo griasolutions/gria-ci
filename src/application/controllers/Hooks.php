@@ -1,11 +1,10 @@
 <?php
 namespace Application\Controller;
 
-use \GriaCi\Controller;
+use \Gria\Controller;
 
 class Hooks extends Controller\Controller
 {
-
 
 
 }

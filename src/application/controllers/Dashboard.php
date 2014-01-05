@@ -1,13 +1,9 @@
 <?php
 namespace Application\Controller;
 
-use \GriaCi\Controller;
+use \Gria\Controller;
 
 class Dashboard extends Controller\Controller
 {
-	public function route()
-	{
-		$this->render('dashboard');
-	}
 
 }

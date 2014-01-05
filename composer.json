@@ -13,11 +13,15 @@
 	},
 	"prefer-stable": true,
 	"autoload": {
-		"psr-4": {
+		"psr-0": {
+			"Gria\\": "src/library/",
 			"GriaCi\\": "src/library/",
-			"Application\\Controller\\": "src/application/controllers/",
-			"Application\\Job\\": "src/application/jobs/",
+			"GriaTest\\": "tests/php/",
 			"ApplicationTest\\": "tests/php/"
+		},
+		"psr-4": {
+			"Application\\Controller\\": "src/application/controllers/",
+			"Application\\Model\\": "src/application/models/"
 		}
 	}
 }
