@@ -8,8 +8,14 @@
 
 namespace Application\Model;
 
+use \Gria\Model;
 
-class Job
+class Job implements Model\ModelInterface
 {
+
+	public function getId()
+	{
+
+	}
 
 } 

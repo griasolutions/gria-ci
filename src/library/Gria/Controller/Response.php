@@ -53,6 +53,14 @@ class Response
 	}
 
 	/**
+	 * @param string $contentType
+	 */
+	public function setContentType($contentType)
+	{
+		$this->addHeader('Content-Type: ' . $contentType);
+	}
+
+	/**
 	 * @param string $body
 	 */
 	public function setBody($body)

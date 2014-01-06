@@ -9,11 +9,12 @@
 namespace Gria\View;
 
 use \Gria\Controller;
+use \Gria\Config;
 
 class View
 {
 
-	use Controller\RequestAwareTrait;
+	use Controller\RequestAwareTrait, Config\ConfigAwareTrait;
 
 	/** @var string */
 	private $_sourcePath;
@@ -23,10 +24,12 @@ class View
 
 	/**
 	 * @param \Gria\Controller\Request $request
+	 * @param \Gria\Config\Config $config
 	 */
-	public function __construct(Controller\Request $request)
+	public function __construct(Controller\Request $request, Config\Config $config)
 	{
 		$this->setRequest($request);
+		$this->setConfig($config);
 	}
 
 	/**

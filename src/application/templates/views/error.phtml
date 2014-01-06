@@ -1,12 +1,6 @@
 <?php echo $this->renderPartial('header'); ?>
-<!-- Intro message -->
-<div class="jumbotron">
-	<h1>Ugh...</h1>
 
-	<p class="lead">
-		Something went wrong. Figure it out.
-	</p>
-</div>
+<?php echo $this->renderPartial('error/' . $this->get('statusCode')); ?>
 
 <?php echo $this->renderPartial('footer'); ?>
 

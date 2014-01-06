@@ -9,6 +9,7 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": ">=3.7",
+		"phpunit/phpunit-selenium": ">=1.2",
 		"mikey179/vfsStream": "*"
 	},
 	"prefer-stable": true,
@@ -17,6 +18,7 @@
 			"Gria\\": "src/library/",
 			"GriaCi\\": "src/library/",
 			"GriaTest\\": "tests/php/",
+			"GriaCiTest\\": "tests/php/",
 			"ApplicationTest\\": "tests/php/"
 		},
 		"psr-4": {

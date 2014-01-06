@@ -17,11 +17,17 @@ class Request
 	/** @var string */
 	private $_uri;
 
+	/** @var array */
+	private $_uriSegments = array();
+
 	/** @var string */
 	private $_url;
 
 	/** @var string */
 	private $_controllerName;
+
+	/** @var string */
+	private $_actionName;
 
 	/**
 	 * @return string
@@ -73,24 +79,44 @@ class Request
 	public function getControllerName()
 	{
 		if (!$this->_controllerName) {
-			$uriParts = explode('/', $this->getUri());
-			array_shift($uriParts);
-			if (!isset($uriParts[0])) {
+			$uriSegments = $this->_getUriSegments();
+			if (!isset($uriSegments[0])) {
 				$this->_controllerName = 'dashboard';
 			} else {
-				switch ($uriParts[0]) {
+				switch ($uriSegments[0]) {
 					case '':
 					case 'dashboard':
 						$this->_controllerName = 'dashboard';
 						break;
 					default:
-						$this->_controllerName = $uriParts[0];
+						$this->_controllerName = strtolower($uriSegments[0]);
 						break;
 				}
 			}
 		}
 
 		return $this->_controllerName;
+	}
+
+	public function getActionName()
+	{
+		if (!$this->_actionName) {
+			$uriSegments = $this->_getUriSegments();
+			$this->_actionName = isset($uriSegments[1]) ? strtolower($uriSegments[1]) : 'index';
+		}
+
+		return $this->_actionName;
+	}
+
+	private function _getUriSegments()
+	{
+		if (!$this->_uriSegments) {
+			$uriSegments = explode('/', $this->getUri());
+			array_shift($uriSegments);
+			$this->_uriSegments = $uriSegments;
+		}
+
+		return $this->_uriSegments;
 	}
 
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 3:24 PM
- */
 
 namespace GriaTest\Unit\Controller;
 
@@ -13,25 +7,48 @@ use \Gria\Controller;
 class ControllerTest extends \PHPUnit_Framework_TestCase
 {
 
-	private $_request;
+	use RequestAwareTestTrait {
+		setUp as requestTraitSetup;
+	}
+
+	private $_controller;
 
 	public function setUp()
 	{
-		$this->_request = $this->getMock('\Gria\Controller\Request', array(
-			'getHost', 'getUri'));
-		$this->_request->expects($this->any())
-			->method('getHost')
-			->will($this->returnValue('example.com'));
+		$this->requestTraitSetup();
+		$this->_controller = new Controller\Controller($this->getRequest(), $this->getConfig());
 	}
 
 	public function testGetRequest()
 	{
-		$controller = new Controller\Controller($this->getRequest());
-		$this->assertInstanceOf('\Gria\Controller\Request', $controller->getRequest());
+		$this->assertInstanceOf('\Gria\Controller\Request', $this->getController()->getRequest());
 	}
 
-	public function getRequest()
+	public function testGetResponse()
 	{
-		return $this->_request;
+		$this->assertInstanceOf('\Gria\Controller\Response', $this->getController()->getResponse());
 	}
+
+	public function testGetView()
+	{
+		$this->assertInstanceOf('\Gria\View\View', $this->getController()->getView());
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testRoute()
+	{
+		$this->getRequest()->expects($this->any())
+			->method('getActionName')
+			->will($this->returnValue('index'));
+		$controller = new Controller\Controller($this->getRequest(), $this->getConfig());
+		$controller->route();
+	}
+
+	public function getController()
+	{
+		return $this->_controller;
+	}
+
 } 

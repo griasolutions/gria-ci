@@ -1,26 +1,18 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/5/14
- * Time: 2:01 AM
- */
 
 namespace GriaTest\Unit\Controller;
 
-
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-	private $_request;
+
+	use RequestAwareTestTrait {
+		setUp as requestTraitSetup;
+	}
 
 	public function setUp()
 	{
-		$this->_request = $this->getMock('\Gria\Controller\Request', array(
-			'getHost', 'getUri'));
-		$this->_request->expects($this->any())
-			->method('getHost')
-			->will($this->returnValue('localhost'));
-		$this->_request->expects($this->any())
+		$this->requestTraitSetup();
+		$this->getRequest()->expects($this->any())
 			->method('getUri')
 			->will($this->returnValue('/test'));
 	}
@@ -35,11 +27,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('http://localhost/test', $this->getRequest()->__toString());
 	}
 
-	public function testGetControllerName()
-	{
-		$this->assertEquals('test', $this->getRequest()->getControllerName());
-	}
-
 	public function testDefaultGetControllerName()
 	{
 		$dashboardRequest = $this->getMock('\Gria\Controller\Request', array(
@@ -51,11 +38,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 			->method('getUri')
 			->will($this->returnValue('/'));
 		$this->assertEquals('dashboard', $dashboardRequest->getControllerName());
-	}
-
-	public function getRequest()
-	{
-		return $this->_request;
 	}
 
 } 

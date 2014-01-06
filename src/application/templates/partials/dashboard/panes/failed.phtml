@@ -1,0 +1,34 @@
+<div class="tab-pane" id="failures">
+	<table class="table table-striped">
+		<tr>
+			<th>Job #</th>
+			<th>Job Name</th>
+			<th>Project</th>
+			<th colspan="2">Notes</th>
+		</tr>
+		<?php for ($i = 0; $i < 10; $i++) : ?>
+			<tr>
+				<td><?php echo(10 - $i); ?></td>
+				<td>Build and Test</td>
+				<td><strong class="project-title">
+						<button type="button" class="btn btn-default"><span
+								class="glyphicon glyphicon-new-window"></span> griasolutions/gria-ci
+						</button></td>
+				<td>Triggered by commit <code>9043as213d33</code> 2 minutes ago<br/>
+					<small>Build ran in 30 seconds. Took a bit long, no?</small>
+				</td>
+				<td>
+					<div class="btn-group btn-group">
+						<button type="button" class="btn btn-default btn-primary"><span
+								class="glyphicon glyphicon-play-circle"></span> Run
+						</button>
+						<button type="button" class="btn btn-default btn-info" data-toggle="modal"
+								data-target="#log-modal"><span class="glyphicon glyphicon-info-sign"></span> View
+							Reports
+						</button>
+					</div>
+				</td>
+			</tr>
+		<?php endfor; ?>
+	</table>
+</div>

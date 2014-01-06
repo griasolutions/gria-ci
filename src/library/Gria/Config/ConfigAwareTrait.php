@@ -2,7 +2,7 @@
 
 namespace Gria\Config;
 
-class Configurable
+trait ConfigAwareTrait
 {
 
 	/** @var \Gria\Config\Config * */
@@ -11,7 +11,7 @@ class Configurable
 	/**
 	 * @param \Gria\Config\Config $config
 	 */
-	public function __construct(Config $config)
+	public function setConfig(Config $config)
 	{
 		$this->_config = $config;
 	}

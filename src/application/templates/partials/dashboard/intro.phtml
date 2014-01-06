@@ -1,0 +1,17 @@
+<!-- Intro message -->
+<div class="jumbotron">
+	<?php if ($this->get('hasFinishedBuilds')) : ?>
+		<h1>
+			<span
+				class="label label-<?php echo $this->get('successStatus'); ?>"><?php echo $this->get('successRate'); ?>
+				%</span> is your current success rate.
+		</h1>
+		<p class="lead">
+			Marvel in this bird's eye view of all of your configured jobs.
+			<br>Build, test, deploy, enjoy.
+		</p>
+	<?php else : ?>
+		<h1>Ready to get started?</h1>
+		<p>Configure some jobs whenever you get a chance. No rush.</p>
+	<?php endif; ?>
+</div>

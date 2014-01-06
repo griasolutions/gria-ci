@@ -1,0 +1,41 @@
+<div class="tab-pane active" id="recent-jobs">
+	<?php $builds = $this->get('finishedBuilds'); ?>
+	<?php if (count($builds) == 0) : ?>
+		<p class="lead">No builds!</p>
+	<?php else : ?>
+		<table class="table table-striped">
+			<tr>
+				<th>Job #</th>
+				<th>Job Name</th>
+				<th>Project</th>
+				<th>Status</th>
+				<th colspan="2">Notes</th>
+			</tr>
+			<?php foreach ($this->get('finishedBuilds') as $build) : ?>
+				<tr>
+					<td><?php echo $build->getId(); ?></td>
+					<td><?php echo $build->getJobName(); ?></td>
+					<td><strong class="project-title">
+							<button type="button" class="btn btn-default"><span
+									class="glyphicon glyphicon-new-window"></span> <?php echo $build->getProjectName(); ?>
+							</button></td>
+					<td><span class="label label-success"><?php echo $build->getStatus(); ?></span></td>
+					<td><?php echo $build->getTrigger(); ?><br/>
+						<small>Build ran in <?php echo $build->getDuration(); ?> seconds.</small>
+					</td>
+					<td>
+						<div class="btn-group btn-group">
+							<button type="button" class="btn btn-default btn-primary"><span
+									class="glyphicon glyphicon-play-circle"></span> Run
+							</button>
+							<button type="button" class="btn btn-default btn-info" data-toggle="modal"
+									data-target="#log-modal"><span class="glyphicon glyphicon-info-sign"></span> View
+								Reports
+							</button>
+						</div>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+	<?php endif; ?>
+</div>

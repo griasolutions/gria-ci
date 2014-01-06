@@ -8,16 +8,20 @@
 
 namespace Gria\Controller;
 
+use \Gria\Config;
+
 interface ControllerInterface
 {
 
 	/**
 	 * @param \Gria\Controller\Request $request
+	 * @param \Gria\Config\Config $config
 	 */
-	public function __construct(Request $request);
+	public function __construct(Request $request, Config\Config $config);
 
 	/**
 	 * @return void
+	 * @throws \Exception
 	 */
 	public function route();
 

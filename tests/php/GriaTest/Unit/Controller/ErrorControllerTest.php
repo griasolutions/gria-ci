@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 3:48 PM
- */
 
 namespace GriaTest\Unit\Controller;
 
@@ -13,29 +7,36 @@ use \Gria\Controller;
 class ErrorControllerTest extends \PHPUnit_Framework_TestCase
 {
 
-	private $_request;
+	use RequestAwareTestTrait {
+		setUp as requestTraitSetup;
+	}
+
+	private $_controller;
 
 	public function setUp()
 	{
-		$this->_request = $this->getMock('\Gria\Controller\Request', array(
-			'getHost', 'getUri'));
-		$this->_request->expects($this->any())
-			->method('getHost')
-			->will($this->returnValue('localhost'));
+		$this->requestTraitSetup();
 		$this->_request->expects($this->any())
 			->method('getUri')
 			->will($this->returnValue('/test'));
+		$dispatcher = new \Gria\Controller\Dispatcher($this->getRequest(), $this->getConfig());
+		$this->_controller = $dispatcher->getController();
 	}
 
-	public function testException()
+	public function testSetGetException()
 	{
-		$dispatcher = new \Gria\Controller\Dispatcher($this->getRequest());
-		$controller = $dispatcher->getController();
-		$this->assertInstanceOf('\Exception', $controller->getException());
+		$this->assertInstanceOf('\Exception', $this->getController()->getException());
 	}
 
-	public function getRequest()
+	public function testRoute()
 	{
-		return $this->_request;
+		$this->getController()->route();
+		$this->assertNotEquals(200, $this->getController()->getView()->get('statusCode'));
 	}
+
+	public function getController()
+	{
+		return $this->_controller;
+	}
+
 } 

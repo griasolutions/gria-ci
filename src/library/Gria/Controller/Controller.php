@@ -9,25 +9,27 @@
 namespace Gria\Controller;
 
 use \Gria\View;
+use \Gria\Config;
 
 class Controller implements ControllerInterface
 {
 
-	use RequestAwareTrait;
+	use RequestAwareTrait, Config\ConfigAwareTrait;
 
-	/** @var  \Gria\View\View */
+	/** @var \Gria\View\View */
 	private $_view;
 
-	/** @var  \Gria\Controller\Response */
+	/** @var \Gria\Controller\Response */
 	private $_response;
 
 	/**
 	 * @inheritdoc
 	 */
-	public function __construct(Request $request)
+	public function __construct(Request $request, Config\Config $config)
 	{
 		$this->setRequest($request);
-		$this->_view = new View\View($request);
+		$this->setConfig($config);
+		$this->_view = new View\View($request, $config);
 		$this->_response = new Response();
 		$className = strtolower(get_called_class());
 		$this->_view->setSourcePath(array_pop(explode('\\', $className)));
@@ -38,7 +40,11 @@ class Controller implements ControllerInterface
 	 */
 	public function route()
 	{
-
+		$actionMethodName = $this->getRequest()->getActionName() . 'Action';
+		if (!method_exists($this, $actionMethodName)) {
+			throw new \InvalidArgumentException('Invalid action requested', 500);
+		}
+		$this->$actionMethodName();
 	}
 
 	/**

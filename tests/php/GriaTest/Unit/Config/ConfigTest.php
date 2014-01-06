@@ -1,17 +1,22 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 1:29 PM
- */
 
 namespace GriaTest\Unit\Config;
 
-class ConfigTest extends ConfigTestAbstract
+use \Gria\Config;
+
+class ConfigTest extends \PHPUnit_Framework_TestCase
 {
 
 	const ERROR_FORMAT = 'Cannot read %s from the config!';
+
+	/** @var \Gria\Config\Config */
+	private $_config;
+
+	public function setUp()
+	{
+		$path = 'tests/fixtures/config/test.ini';
+		$this->_config = new Config\Config($path);
+	}
 
 	public function testGetString()
 	{
@@ -41,6 +46,14 @@ class ConfigTest extends ConfigTestAbstract
 	public function testGetPath()
 	{
 		$this->assertEquals(realpath('tests/fixtures/config/test.ini'), $this->getConfig()->getPath());
+	}
+
+	/**
+	 * @return \Gria\Config\Config
+	 */
+	public function getConfig()
+	{
+		return $this->_config;
 	}
 
 } 

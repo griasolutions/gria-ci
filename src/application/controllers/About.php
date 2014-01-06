@@ -12,5 +12,4 @@ use \Gria\Controller;
 
 class About extends Controller\Controller
 {
-
 } 

@@ -1,0 +1,10 @@
+<!-- Nav tabs -->
+<ul id="dashboard-tabs" class="nav nav-tabs nav-justified">
+	<li class="active"><a href="#recent-jobs" data-toggle="tab" class="text-muted"><span
+				class="glyphicon glyphicon-time"></span> Recent Builds <span
+				class="badge pull-right"><?php echo $this->get('numFinishedBuilds'); ?></span></a></li>
+	<li><a href="#queue" data-toggle="tab" class="text-muted"><span class="glyphicon glyphicon-pushpin"></span> Build
+			Queue <span class="badge pull-right"><?php echo $this->get('numQueuedBuilds'); ?></span></a></li>
+	<li><a href="#failures" data-toggle="tab" class="text-danger"><span class="glyphicon glyphicon-ban-circle"></span>
+			Failed Builds <span class="badge pull-right"><?php echo $this->get('numFailedBuilds'); ?></span></a></li>
+</ul>

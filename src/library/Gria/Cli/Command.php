@@ -3,17 +3,20 @@
 namespace Gria\Cli;
 
 use \Gria\Config;
+use \Gria\Controller;
 
 // APPLICATION=WP-Write WORKSPACE_PATH=`pwd`/wp-write REPOSITORY_URL=git@bitbucket.org:guillermoandrae/wp-write.git ~/Sites/gria-ci/bin/build.sh
 
-abstract class Command extends Config\Configurable
+abstract class Command
 {
+
+	use Config\ConfigAwareTrait;
 
 	private $_scriptPath;
 
 	public function __construct(Config\Config $config)
 	{
-		parent::__construct($config);
+		$this->setConfig($config);
 		$this->init();
 	}
 

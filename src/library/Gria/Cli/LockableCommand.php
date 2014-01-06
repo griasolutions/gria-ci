@@ -6,7 +6,7 @@ namespace Gria\Cli;
 
 use \Gria\Config;
 
-abstract class LockableCommand extends Config\Configurable
+abstract class LockableCommand extends Command
 {
 
 	const NUM_MAX_EXECUTION_ATTEMPTS = 3;
@@ -19,13 +19,8 @@ abstract class LockableCommand extends Config\Configurable
 
 	public function __construct(Config\Config $config)
 	{
-		parent::__construct($config);
 		$this->_lockPath = '';
-		$this->init();
-	}
-
-	public function init()
-	{
+		parent::__construct($config);
 	}
 
 	public function run()
@@ -49,8 +44,6 @@ abstract class LockableCommand extends Config\Configurable
 		return $exitStatus;
 	}
 
-	abstract public function getCommand();
-
 	public function isLocked()
 	{
 		return file_exists($this->getLockPath());
@@ -64,16 +57,6 @@ abstract class LockableCommand extends Config\Configurable
 	public function unlock()
 	{
 		unlink($this->getLockPath());
-	}
-
-	public function setScriptPath($scriptPath)
-	{
-		$this->_scriptPath = $scriptPath;
-	}
-
-	public function getScriptPath()
-	{
-		return $this->_scriptPath;
 	}
 
 	public function getLockPath()

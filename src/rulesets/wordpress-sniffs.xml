@@ -27,8 +27,8 @@
 		exclude problematic sniffs like so.
 		-->
 
-		<exclude name="WordPress.Formatting.MultipleStatementAlignment" />
-		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
-		<exclude name="WordPress.Functions.FunctionCallSignature" />
+		<exclude name="WordPress.Formatting.MultipleStatementAlignment"/>
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
+		<exclude name="WordPress.Functions.FunctionCallSignature"/>
 	</rule>
 </ruleset>
