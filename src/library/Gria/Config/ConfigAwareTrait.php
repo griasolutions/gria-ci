@@ -10,10 +10,14 @@ trait ConfigAwareTrait
 
 	/**
 	 * @param \Gria\Config\Config $config
+	 *
+	 * @return $this
 	 */
 	public function setConfig(Config $config)
 	{
 		$this->_config = $config;
+
+		return $this;
 	}
 
 	/**
