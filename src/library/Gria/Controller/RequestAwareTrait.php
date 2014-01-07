@@ -16,10 +16,14 @@ trait RequestAwareTrait
 
 	/**
 	 * @param \Gria\Controller\Request $request
+	 *
+	 * @return $this
 	 */
 	public function setRequest(Request $request)
 	{
 		$this->_request = $request;
+
+		return $this;
 	}
 
 	/**
