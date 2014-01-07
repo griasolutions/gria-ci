@@ -1,5 +1,5 @@
 .idea
 *.iml
-/config/jobs.ini
-vendor
+/config/application.ini
+/vendor
 /src/application/data/*.xml
