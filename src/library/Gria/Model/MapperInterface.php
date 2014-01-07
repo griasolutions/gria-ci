@@ -22,4 +22,23 @@ interface MapperInterface
 	 */
 	public function findById($id);
 
+	/**
+	 * @param array $data
+	 * @return \Gria\Model\Model
+	 */
+	public function create(array $data);
+
+	/**
+	 * @param mixed $id
+	 * @param array $data
+	 * @return \Gria\Model\Model
+	 */
+	public function update($id, array $data);
+
+	/**
+	 * @param mixed $id
+	 * @return boolean
+	 */
+	public function delete($id);
+
 } 
