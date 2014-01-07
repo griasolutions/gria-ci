@@ -1,0 +1,15 @@
+# Deny access to sensitive files & directories
+<Files "^(bin|config|tests|vendor|src\/bootstrap\.php|src\/application|src\/library|src\/rulesets)$">
+  Order Deny,Allow
+  Deny from all
+</Files>
+
+# Set the environment variable
+SetEnv APPLICATION_ENV "production"
+
+# If the request is not for an existing file or directory, route it to the
+# index.php file in the public directory
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ src/public/index.php/$1 [L]

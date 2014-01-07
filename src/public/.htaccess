@@ -1,4 +1,0 @@
-<Files "^(bin|ci\.lock|config|library)$">
-  Order Allow,Deny
-  Deny from all
-</Files>
