@@ -1,15 +1,14 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 12:08 PM
+ * This file is part of the Gria library.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Gria\Controller;
 
 use \Gria\Config;
-use GriaTest\Unit\Config\ConfigTestAbstract;
 
 class Dispatcher
 {
@@ -34,32 +33,38 @@ class Dispatcher
 	 */
 	public function run()
 	{
-		$this->getController()->route();
-		$this->getController()->respond();
+		try {
+			$controller = $this->getController();
+			$controller->route();
+			$controller->render();
+			$controller->respond();
+		} catch (\Exception $ex) {
+			$className = 'ErrorController';
+			if (class_exists('\Application\Controller\Error')) {
+				$className = '\Application\Controller\Error';
+			}
+			$this->_controller = (new $className($this->getRequest(), $this->getConfig()))->setException($ex);
+			$this->run();
+		}
 	}
 
 	/**
-	 * @return \Gria\Controller\ErrorController|\Gria\Controller\Controller
+	 * @throws \InvalidArgumentException
+	 * @return \Gria\Controller\Controller
 	 */
 	public function getController()
 	{
 		if (!$this->_controller) {
 			$request = $this->getRequest();
-			$config = $this->getConfig();
+			$controllerName = $request->getControllerName();
+			$controllerClassName = 'Application\Controller\\' . ucfirst($controllerName);
 			try {
-				$controllerName = $request->getControllerName();
-				$controllerClassName = 'Application\Controller\\' . ucfirst($controllerName);
-				try {
-					$reflectionClass = new \ReflectionClass($controllerClassName);
-					$controller = $reflectionClass->newInstance($request, $config);
-				} catch (\ReflectionException $ex) {
-					throw new \Exception('Invalid controller requested', 404);
-				}
-			} catch (\Exception $ex) {
-				$controller = new \Application\Controller\Error($request, $config);
-				$controller->setException($ex);
+				$reflectionClass = new \ReflectionClass($controllerClassName);
+				$controller = $reflectionClass->newInstance($request, $this->getConfig());
+				$this->_controller = $controller;
+			} catch (\ReflectionException $ex) {
+				throw new \InvalidArgumentException('Invalid controller requested', 404);
 			}
-			$this->_controller = $controller;
 		}
 
 		return $this->_controller;
