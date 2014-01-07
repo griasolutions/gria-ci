@@ -29,10 +29,16 @@ class Controller implements ControllerInterface
 	{
 		$this->setRequest($request);
 		$this->setConfig($config);
-		$this->_view = new View\View($request, $config);
 		$this->_response = new Response();
-		$className = strtolower(get_called_class());
-		$this->_view->setSourcePath(array_pop(explode('\\', $className)));
+		$this->_view = new View\View($this->getRequest(), $this->getConfig());
+		$this->init();
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function init()
+	{
 	}
 
 	/**
@@ -42,7 +48,7 @@ class Controller implements ControllerInterface
 	{
 		$actionMethodName = $this->getRequest()->getActionName() . 'Action';
 		if (!method_exists($this, $actionMethodName)) {
-			throw new \InvalidArgumentException('Invalid action requested', 500);
+			throw new \BadMethodCallException('Invalid action requested', 500);
 		}
 		$this->$actionMethodName();
 	}
@@ -50,10 +56,25 @@ class Controller implements ControllerInterface
 	/**
 	 * @return void
 	 */
+	public function indexAction()
+	{
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function render()
+	{
+		$className = strtolower(get_called_class());
+		$this->getView()->setSourcePath(array_pop(explode('\\', $className)));
+		$this->getResponse()->setBody($this->getView()->render());
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	public function respond()
 	{
-		$output = $this->getView()->render();
-		$this->getResponse()->setBody($output);
 		$this->getResponse()->send();
 	}
 

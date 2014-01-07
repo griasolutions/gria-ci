@@ -21,9 +21,19 @@ interface ControllerInterface
 
 	/**
 	 * @return void
+	 */
+	public function init();
+
+	/**
+	 * @return void
 	 * @throws \Exception
 	 */
 	public function route();
+
+	/**
+	 * @return void
+	 */
+	public function render();
 
 	/**
 	 * @return void

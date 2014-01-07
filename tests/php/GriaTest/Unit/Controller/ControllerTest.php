@@ -35,15 +35,29 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @expectedException \InvalidArgumentException
+	 * @expectedException \BadMethodCallException
 	 */
 	public function testRoute()
+	{
+		$this->getRequest()->expects($this->any())
+			->method('getActionName')
+			->will($this->returnValue('test'));
+		$controller = new Controller\Controller($this->getRequest(), $this->getConfig());
+		$controller->route();
+	}
+
+	/**
+	 * @expectedException \Exception
+	 */
+	public function testRender()
 	{
 		$this->getRequest()->expects($this->any())
 			->method('getActionName')
 			->will($this->returnValue('index'));
 		$controller = new Controller\Controller($this->getRequest(), $this->getConfig());
 		$controller->route();
+		$controller->render();
+		$this->assertEquals('controller', $controller->getView()->getSourcePath());
 	}
 
 	public function getController()
