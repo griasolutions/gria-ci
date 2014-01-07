@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a6cc51bff4128733314583ed76f4a7d3",
+    "hash": "367de6f9c2217f25fd2619861310b1b4",
     "packages": [
         {
             "name": "austinhyde/iniparser",
