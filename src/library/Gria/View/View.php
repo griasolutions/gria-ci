@@ -16,6 +16,8 @@ class View
 
 	use Controller\RequestAwareTrait, Config\ConfigAwareTrait;
 
+	const VIEW_BASE_PATH = 'src/application/templates';
+
 	/** @var string */
 	private $_sourcePath;
 
@@ -94,14 +96,17 @@ class View
 	}
 
 	/**
-	 * @param $templatePath
+	 * @param string $templateName
+	 * @throws \Exception
 	 * @return string
 	 */
-	private function _renderTemplate($templatePath)
+	private function _renderTemplate($templateName)
 	{
 		ob_start();
-		include 'src/application/templates/' . $templatePath . '.phtml';
-		$output = ob_get_clean();
+		@include self::VIEW_BASE_PATH . '/' . $templateName . '.phtml';
+		if (!$output = ob_get_clean()) {
+			throw new \Exception('Invalid template requested', 500);
+		}
 
 		return $output;
 	}
