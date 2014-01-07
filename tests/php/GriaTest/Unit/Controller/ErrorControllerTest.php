@@ -19,13 +19,14 @@ class ErrorControllerTest extends \PHPUnit_Framework_TestCase
 		$this->_request->expects($this->any())
 			->method('getUri')
 			->will($this->returnValue('/test'));
-		$dispatcher = new \Gria\Controller\Dispatcher($this->getRequest(), $this->getConfig());
-		$this->_controller = $dispatcher->getController();
+		$this->_controller = new Controller\ErrorController($this->getRequest(), $this->getConfig());
 	}
 
 	public function testSetGetException()
 	{
-		$this->assertInstanceOf('\Exception', $this->getController()->getException());
+		$exception = new \Exception('test', 500);
+		$this->getController()->setException($exception);
+		$this->assertEquals($exception, $this->getController()->getException());
 	}
 
 	public function testRoute()

@@ -1,13 +1,12 @@
 <?php
 /**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/3/14
- * Time: 12:33 PM
+ * This file is part of the Gria library.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Gria\Controller;
-
 
 class ErrorController extends Controller
 {
@@ -27,10 +26,14 @@ class ErrorController extends Controller
 
 	/**
 	 * @param \Exception $ex
+	 *
+	 * @return $this
 	 */
 	public function setException(\Exception $ex)
 	{
 		$this->_exception = $ex;
+
+		return $this;
 	}
 
 	/**
@@ -38,6 +41,10 @@ class ErrorController extends Controller
 	 */
 	public function getException()
 	{
+		if (!$this->_exception) {
+			$this->setException(new \Exception('An unknown error occurred', 500));
+		}
+
 		return $this->_exception;
 	}
 
