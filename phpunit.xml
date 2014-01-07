@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./tests/bootstrap.php">
+<phpunit bootstrap="./tests/bootstrap.php" strict="true">
 	<php>
-	<ini name="memory_limit" value="1512M"/>
+		<ini name="memory_limit" value="1512M"/>
 		<const name="PHPUNIT" value="true"/>
 		<const name="APPLICATION_ENV" value="test"/>
 	</php>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="true">
 			<directory>./src</directory>
-			<directory>../modules</directory>
 			<exclude>
+				<directory>./src/application/data</directory>
+				<directory>./src/application/scripts</directory>
+				<directory>./src/application/templates</directory>
 				<directory>./src/public</directory>
+				<directory>./src/rulesets</directory>
 				<directory>./vendor</directory>
 			</exclude>
 		</whitelist>
