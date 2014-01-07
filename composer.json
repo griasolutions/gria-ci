@@ -21,6 +21,7 @@
 		},
 		"psr-4": {
 			"Application\\Controller\\": "src/application/controllers/",
+			"Application\\Helper\\": "src/application/helpers/",
 			"Application\\Model\\": "src/application/models/"
 		}
 	}
