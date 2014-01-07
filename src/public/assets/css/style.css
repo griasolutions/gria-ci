@@ -31,11 +31,13 @@
 }
 
 .nav-tabs a {
-    font-size: 20px;
+    font-family: "Raleway", sans-serif;
+    font-size: 18px;
 }
 
 #dashboard-tabs li.active a {
     background: #eee;
+    border-top: 2px solid #555;
 }
 
 #dashboard-views .tab-pane table {
