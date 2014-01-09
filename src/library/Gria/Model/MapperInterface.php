@@ -12,15 +12,44 @@ interface MapperInterface
 {
 
 	/**
+	 * @param \PDO $db
+	 */
+	public function __construct(\PDO $db);
+
+	/**
+	 * @return \PDO
+	 */
+	public function getDb();
+
+	/**
+	 * @return string
+	 */
+	public function getTableName();
+
+	/**
+	 * @return string
+	 */
+	public function getModelClassName();
+
+	/**
+	 * @param int $offset
+	 * @param int $limit
 	 * @return \ArrayObject
 	 */
-	public function findAll();
+	public function findAll($offset = 0, $limit = 0);
 
 	/**
 	 * @param $id
-	 * @return \Gria\Model\Model
+	 * @return \ArrayObject
 	 */
 	public function findById($id);
+
+	/**
+	 * @param string $field
+	 * @param mixed $value
+	 * @return \ArrayObject
+	 */
+	public function findByField($field, $value);
 
 	/**
 	 * @param array $data

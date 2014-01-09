@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/5/14
- * Time: 11:56 AM
- */
 
 namespace Application\Helper;
 
@@ -17,8 +11,8 @@ class Build
 
 	public function __construct()
 	{
-		$path = '/Users/guillermoandraefisher/Sites/gria-ci/src/application/data/build.xml';
-		$this->_buildMapper = new Model\BuildMapper($path);
+		$db = new \PDO('sqlite3:src/application/data/gria.db');
+		$this->_buildMapper = new Model\BuildMapper($db);
 	}
 
 	public function hasFinishedBuilds()

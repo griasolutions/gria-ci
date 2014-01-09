@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/5/14
- * Time: 3:25 PM
- */
 
 namespace ApplicationTest\Unit\Model;
 
@@ -14,20 +8,60 @@ class BuildMapperTest extends \PHPUnit_Framework_TestCase
 {
 
 	private $_mapper;
+	private $_csvResource;
 
 	public function setUp()
 	{
-		$this->_mapper = new Model\BuildMapper();
+		$path = GRIACI_FIXTURE_DIR . '/data/builds.xml';
+		$this->_mapper = new Model\BuildMapper($path);
+		$this->_csvResource = fopen(GRIACI_FIXTURE_DIR . '/data/builds.csv', 'r');
+	}
+
+	public function tearDown()
+	{
+		fclose($this->getBuildCsvResource());
 	}
 
 	public function testFindAll()
 	{
-		$this->assertInstanceOf('\ArrayObject', $this->getBuildMapper()->findAll());
+		$builds = $this->getBuildMapper()->findAll();
+		$this->assertInstanceOf('\ArrayObject', $builds);
+		$this->assertInstanceOf('\Application\Model\Build', $builds[0]);
+	}
+
+	public function testCreate()
+	{
+		$data = fgetcsv($this->getBuildCsvResource());
+		foreach ($data as $row) {
+			$this->assertInstanceOf('\Application\Model\Build', $this->getBuildMapper()->create($row));
+		}
+	}
+
+	public function testUpdate()
+	{
+		$id = 40;
+		$data = array('triggerUser' => 'anonymous');
+		$this->assertTrue($this->getBuildMapper()->update($id, $data));
+		$build = $this->getBuildMapper()->findById($id);
+		$this->assertInstanceOf('\Application\Model\Build', $build);
+		$this->assertEquals('anonymous', $build->getTriggerUser());
+	}
+
+	public function testDelete()
+	{
+		$id = 40;
+		$this->assertTrue($this->getBuildMapper()->delete($id));
+		$this->assertNull('\Application\Model\Build', $this->getBuildMapper()->findById($id));
 	}
 
 	public function getBuildMapper()
 	{
 		return $this->_mapper;
+	}
+
+	public function getBuildCsvResource()
+	{
+		return $this->_csvResource;
 	}
 
 } 
