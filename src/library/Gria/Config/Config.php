@@ -51,8 +51,8 @@ class Config
 	 */
 	public function get($key)
 	{
-		$data = $this->getConfig();
-		if (array_key_exists($key, $config)) {
+		$data = $this->getData();
+		if (array_key_exists($key, $data)) {
 			return $data[$key];
 		}
 	}

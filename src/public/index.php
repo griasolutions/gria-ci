@@ -9,8 +9,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 // pull in composer dependencies
 require 'vendor/autoload.php';
 
-// dispatch the call
+// run the application
 $path = dirname(dirname(dirname(__FILE__))) . '/config/application.ini';
-(new \Gria\Controller\Dispatcher(
-	new \Gria\Controller\Request(), new \Gria\Config\Config($path)))
-	->run();
+(new \Gria\Application\Application($path))->run();
