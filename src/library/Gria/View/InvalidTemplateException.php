@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/7/14
- * Time: 4:12 PM
- */
 
 namespace Gria\View;
 
-
-class InvalidTemplateException
+class InvalidTemplateException extends \Exception
 {
+
+	/**
+	 * @inheritdoc
+	 */
+	public function __construct($message = "", $code = 0, \Exception $previous = null)
+	{
+		parent::__construct($message, 500, $previous);
+	}
 
 } 
