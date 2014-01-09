@@ -6,7 +6,7 @@
  * Time: 11:56 AM
  */
 
-namespace GriaCi\Helper;
+namespace Application\Helper;
 
 use \Application\Model;
 
@@ -17,7 +17,8 @@ class Build
 
 	public function __construct()
 	{
-		$this->_buildMapper = new Model\BuildMapper();
+		$path = '/Users/guillermoandraefisher/Sites/gria-ci/src/application/data/build.xml';
+		$this->_buildMapper = new Model\BuildMapper($path);
 	}
 
 	public function hasFinishedBuilds()

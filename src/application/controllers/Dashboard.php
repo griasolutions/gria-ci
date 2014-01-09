@@ -1,8 +1,8 @@
 <?php
 namespace Application\Controller;
 
+use \Application\Helper;
 use \Gria\Controller;
-use \GriaCi\Helper;
 
 class Dashboard extends Controller\Controller
 {
@@ -12,7 +12,7 @@ class Dashboard extends Controller\Controller
 		$helper = new Helper\Build();
 
 		$this->getView()->set('hasFinishedBuilds', $helper->hasFinishedBuilds());
-
+		
 		$successRate = $helper->getSuccessRate();
 		$successStatus = 'danger';
 		$this->getView()->set('successRate', $successRate);

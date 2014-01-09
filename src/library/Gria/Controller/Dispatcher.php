@@ -39,7 +39,7 @@ class Dispatcher
 			$controller->render();
 			$controller->respond();
 		} catch (\Exception $ex) {
-			$className = 'ErrorController';
+			$className = '\Gria\Controller\ErrorController';
 			if (class_exists('\Application\Controller\Error')) {
 				$className = '\Application\Controller\Error';
 			}
@@ -57,7 +57,7 @@ class Dispatcher
 		if (!$this->_controller) {
 			$request = $this->getRequest();
 			$controllerName = $request->getControllerName();
-			$controllerClassName = 'Application\Controller\\' . ucfirst($controllerName);
+			$controllerClassName = '\Application\Controller\\' . ucfirst($controllerName);
 			try {
 				$reflectionClass = new \ReflectionClass($controllerClassName);
 				$controller = $reflectionClass->newInstance($request, $this->getConfig());
