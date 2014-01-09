@@ -39,11 +39,18 @@ class Dispatcher
 			$controller->render();
 			$controller->respond();
 		} catch (\Exception $ex) {
+<<<<<<< HEAD
 			$className = '\Gria\Controller\ErrorController';
 			if (class_exists('\Application\Controller\Error')) {
 				$className = '\Application\Controller\Error';
+=======
+			$className = 'ErrorController';
+			$applicationClassName = '\Application\Controller\Error';
+			if (class_exists($applicationClassName)) {
+				$className = $applicationClassName;
+>>>>>>> develop
 			}
-			$this->_controller = (new $className($this->getRequest(), $this->getConfig()))->setException($ex);
+			$this->_controller = new $className($this->getRequest(), $this->getConfig());
 			$this->run();
 		}
 	}

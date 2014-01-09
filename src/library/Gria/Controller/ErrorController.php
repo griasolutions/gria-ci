@@ -19,9 +19,9 @@ class ErrorController extends Controller
 	 */
 	public function route()
 	{
-		$statusCode = $this->getException()->getCode();
-		$this->getResponse()->setStatusCode($statusCode);
-		$this->getView()->set('statusCode', $statusCode);
+		$exception = $this->getException();
+		$this->getResponse()->setStatusCode($exception->getCode());
+		$this->getView()->set('exception', $exception);
 	}
 
 	/**
