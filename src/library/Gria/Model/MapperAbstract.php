@@ -88,26 +88,59 @@ abstract class MapperAbstract implements MapperInterface
 		return $statement->fetchAll();
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function create(array $data)
 	{
 		$values = implode(',:', array_keys($data));
 		$sql = 'INSERT INTO ' . $this->getTableName() . ' values(' . $values . ')';
-		$statement = new \PDOStatement($sql);
-		foreach($data as $field => $value) {
-			$statement->bindParam(':' . $field, $value);
-		}
+		$statement = $this->_bindParamArray(new \PDOStatement($sql), $data);
+
 		return $statement->execute();
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function update($id, array $data)
 	{
+		$sql = 'UPDATE ' . $this->getTableName() . ' SET ';
+		$setStatements = array_map(function ($value) {
+			return $value . ' = :' . $value;
+		}, array_keys($data));
+		$sql .= implode(',', $setStatements);
+		$sql .= ' WHERE id = :id';
+		$statement = $this->_bindParamArray(
+			new \PDOStatement($sql),
+			array_merge(array('id' => $id), $data)
+		);
+
+		return $statement->execute();
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public function delete($id)
 	{
 		$sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE id = :id';
-		$statement = new \PDOStatement($sql);
-		return $statement->execute();
+
+		return (new \PDOStatement($sql))->execute();
+	}
+
+	/**
+	 * @param \PDOStatement $statement
+	 * @param array $data
+	 * @return \PDOStatement
+	 */
+	private function _bindParamArray(\PDOStatement $statement, array $data)
+	{
+		foreach ($data as $field => $value) {
+			$statement->bindParam(':' . $field, $value);
+		}
+
+		return $statement;
 	}
 
 } 

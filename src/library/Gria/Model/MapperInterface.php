@@ -53,14 +53,14 @@ interface MapperInterface
 
 	/**
 	 * @param array $data
-	 * @return \Gria\Model\Model
+	 * @return boolean
 	 */
 	public function create(array $data);
 
 	/**
 	 * @param mixed $id
 	 * @param array $data
-	 * @return \Gria\Model\Model
+	 * @return boolean
 	 */
 	public function update($id, array $data);
 
