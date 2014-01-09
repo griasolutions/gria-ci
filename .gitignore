@@ -1,5 +1,7 @@
 .idea
 *.iml
+*.db
+*.netbeans
 /config/application.ini
 /vendor
 /src/application/data/*.xml
