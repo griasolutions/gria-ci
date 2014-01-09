@@ -8,6 +8,9 @@
 
 namespace Gria\Model;
 
+use \Gria\Db;
+use \ICanBoogie\Inflector;
+
 abstract class MapperAbstract implements MapperInterface
 {
 
@@ -23,15 +26,14 @@ abstract class MapperAbstract implements MapperInterface
 	/**
 	 * @inheritdoc
 	 */
-	public function __construct(\PDO $db)
+	public function __construct(Db\Db $db)
 	{
 		$this->_db = $db;
-		$pattern = '/Application\\Model\\([\w])Mapper\/';
-		if (!preg_match($pattern, get_called_class(), $matches)) {
-			throw new \Exception();
+		if (!preg_match('/([\w]+)Mapper/', get_called_class(), $matches)) {
+			throw new InvalidModelException(sprintf('%s is an invalid model name', get_called_class()));
 		}
 		$modelName = $matches[0];
-		$this->_tableName = strtolower($modelName);
+		$this->_tableName = Inflector::get()->pluralize(strtolower($modelName));
 		$this->_modelClassName = '\Application\Model\\' . $modelName ;
 	}
 
@@ -95,7 +97,7 @@ abstract class MapperAbstract implements MapperInterface
 	{
 		$values = implode(',:', array_keys($data));
 		$sql = 'INSERT INTO ' . $this->getTableName() . ' values(' . $values . ')';
-		$statement = $this->_bindParamArray(new \PDOStatement($sql), $data);
+		$statement = $this->getDb()->bindParamArray(new \PDOStatement($sql), $data);
 
 		return $statement->execute();
 	}
@@ -111,8 +113,8 @@ abstract class MapperAbstract implements MapperInterface
 		}, array_keys($data));
 		$sql .= implode(',', $setStatements);
 		$sql .= ' WHERE id = :id';
-		$statement = $this->_bindParamArray(
-			new \PDOStatement($sql),
+		$statement = $this->getDb()->bindParamArray(
+		new \PDOStatement($sql),
 			array_merge(array('id' => $id), $data)
 		);
 
@@ -127,20 +129,6 @@ abstract class MapperAbstract implements MapperInterface
 		$sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE id = :id';
 
 		return (new \PDOStatement($sql))->execute();
-	}
-
-	/**
-	 * @param \PDOStatement $statement
-	 * @param array $data
-	 * @return \PDOStatement
-	 */
-	private function _bindParamArray(\PDOStatement $statement, array $data)
-	{
-		foreach ($data as $field => $value) {
-			$statement->bindParam(':' . $field, $value);
-		}
-
-		return $statement;
 	}
 
 } 

@@ -3,6 +3,7 @@
 namespace Application\Helper;
 
 use \Application\Model;
+use \Gria\Db;
 
 class Build
 {
@@ -11,8 +12,7 @@ class Build
 
 	public function __construct()
 	{
-		$db = new \PDO('sqlite3:src/application/data/gria.db');
-		$this->_buildMapper = new Model\BuildMapper($db);
+		$this->_buildMapper = new Model\BuildMapper(Db\Db::getInstance());
 	}
 
 	public function hasFinishedBuilds()

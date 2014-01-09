@@ -8,13 +8,16 @@
 
 namespace Gria\Model;
 
+use \Gria\Db;
+
 interface MapperInterface
 {
 
 	/**
-	 * @param \PDO $db
+	 * @param \Gria\Db\Db $db
+	 * @throws \Gria\Model\InvalidModelException
 	 */
-	public function __construct(\PDO $db);
+	public function __construct(Db\Db $db);
 
 	/**
 	 * @return \PDO
