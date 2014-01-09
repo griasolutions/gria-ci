@@ -6,5 +6,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
 	dirname(dirname(__FILE__)),
 )));
 
+// define the path to the fixtures directory
+define('GRIACI_FIXTURE_DIR', dirname(__FILE__) . '/fixtures');
+
 // pull in composer dependencies
 require 'vendor/autoload.php';

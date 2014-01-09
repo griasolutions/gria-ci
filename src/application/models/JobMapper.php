@@ -1,16 +1,33 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/5/14
- * Time: 1:50 PM
- */
 
 namespace Application\Model;
 
-use \GriaCi\Model;
+use \Gria\Model;
 
-class JobMapper extends Model\Mapper
+class JobMapper extends Model\MapperAbstract
 {
+
+	public function findAll()
+	{
+	}
+
+	public function findById($id)
+	{
+	}
+
+	public function create(array $data)
+	{
+
+	}
+
+	public function update($id, array $data)
+	{
+
+	}
+
+	public function delete($id)
+	{
+
+	}
 
 } 

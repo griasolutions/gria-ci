@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: gfisher
- * Date: 1/5/14
- * Time: 11:56 AM
- */
 
 namespace GriaCi\Helper;
 
@@ -17,7 +11,8 @@ class Build
 
 	public function __construct()
 	{
-		$this->_buildMapper = new Model\BuildMapper();
+		$db = new \PDO('sqlite3:src/application/data/gria.db');
+		$this->_buildMapper = new Model\BuildMapper($db);
 	}
 
 	public function hasFinishedBuilds()
