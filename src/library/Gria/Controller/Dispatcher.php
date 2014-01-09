@@ -39,38 +39,35 @@ class Dispatcher
 			$controller->render();
 			$controller->respond();
 		} catch (\Exception $ex) {
-<<<<<<< HEAD
 			$className = '\Gria\Controller\ErrorController';
-			if (class_exists('\Application\Controller\Error')) {
-				$className = '\Application\Controller\Error';
-=======
-			$className = 'ErrorController';
 			$applicationClassName = '\Application\Controller\Error';
 			if (class_exists($applicationClassName)) {
 				$className = $applicationClassName;
->>>>>>> develop
 			}
-			$this->_controller = new $className($this->getRequest(), $this->getConfig());
+			$this->_controller = (new \ReflectionClass($className))
+				->newInstance($this->getRequest(), $this->getConfig())
+				->setException($ex);
 			$this->run();
 		}
 	}
 
 	/**
-	 * @throws \InvalidArgumentException
+	 * @throws \Gria\Controller\InvalidControllerException
 	 * @return \Gria\Controller\Controller
 	 */
 	public function getController()
 	{
 		if (!$this->_controller) {
+			$config = $this->getConfig();
 			$request = $this->getRequest();
 			$controllerName = $request->getControllerName();
 			$controllerClassName = '\Application\Controller\\' . ucfirst($controllerName);
 			try {
 				$reflectionClass = new \ReflectionClass($controllerClassName);
-				$controller = $reflectionClass->newInstance($request, $this->getConfig());
+				$controller = $reflectionClass->newInstance($request, $config);
 				$this->_controller = $controller;
 			} catch (\ReflectionException $ex) {
-				throw new \InvalidArgumentException('Invalid controller requested', 404);
+				throw new InvalidControllerException(sprintf('%s is not a valid controller', $controllerClassName));
 			}
 		}
 

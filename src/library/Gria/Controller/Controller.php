@@ -48,7 +48,7 @@ class Controller implements ControllerInterface
 	{
 		$actionMethodName = $this->getRequest()->getActionName() . 'Action';
 		if (!method_exists($this, $actionMethodName)) {
-			throw new \BadMethodCallException('Invalid action requested', 500);
+			throw new InvalidActionException(sprintf('%s is not a valid action', $actionMethodName));
 		}
 		$this->$actionMethodName();
 	}
@@ -65,8 +65,10 @@ class Controller implements ControllerInterface
 	 */
 	public function render()
 	{
-		$className = strtolower(get_called_class());
-		$this->getView()->setSourcePath(array_pop(explode('\\', $className)));
+		if (!$this->getView()->getSourcePath()) {
+			$className = strtolower(get_called_class());
+			$this->getView()->setSourcePath(array_pop(explode('\\', $className)));
+		}
 		$this->getResponse()->setBody($this->getView()->render());
 	}
 

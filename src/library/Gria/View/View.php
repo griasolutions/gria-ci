@@ -32,14 +32,16 @@ class View
 	{
 		$this->setRequest($request);
 		$this->setConfig($config);
+		$this->init();
 	}
 
 	/**
-	 * @see \Gria\Controller\Request::getControllerName()
+	 * @return void
 	 */
-	public function getControllerName()
+	public function init()
 	{
-		return $this->getRequest()->getControllerName();
+		$this->set('controllerName', $this->getRequest()->getControllerName());
+		$this->set('actionName', $this->getRequest()->getActionName());
 	}
 
 	/**
@@ -97,7 +99,7 @@ class View
 
 	/**
 	 * @param string $templateName
-	 * @throws \Exception
+	 * @throws \Gria\View\InvalidTemplateException
 	 * @return string
 	 */
 	private function _renderTemplate($templateName)
@@ -105,7 +107,7 @@ class View
 		ob_start();
 		@include self::VIEW_BASE_PATH . '/' . $templateName . '.phtml';
 		if (!$output = ob_get_clean()) {
-			throw new \Exception('Invalid template requested', 500);
+			throw new InvalidTemplateException(sprintf('%s is not a valid template', $templateName));
 		}
 
 		return $output;

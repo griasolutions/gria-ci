@@ -25,6 +25,15 @@ class ErrorController extends Controller
 	}
 
 	/**
+	 * @inheritdoc
+	 */
+	public function render()
+	{
+		$this->getView()->setSourcePath('error');
+		parent::render();
+	}
+
+	/**
 	 * @param \Exception $ex
 	 *
 	 * @return $this

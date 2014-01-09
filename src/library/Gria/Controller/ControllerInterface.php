@@ -26,7 +26,7 @@ interface ControllerInterface
 
 	/**
 	 * @return void
-	 * @throws \Exception
+	 * @throws \Gria\Controller\InvalidActionException
 	 */
 	public function route();
 
