@@ -15,7 +15,7 @@ class Config
 	private $_path;
 
 	/** @var array */
-	private $_config = array();
+	private $_data = array();
 
 	/**
 	 * @param string $path
@@ -25,16 +25,16 @@ class Config
 	{
 		if ($this->_path = realpath($path)) {
 			$ini = new \IniParser($this->_path);
-			$this->_config = $ini->parse();
+			$this->_data = $ini->parse();
 		}
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getConfig()
+	public function getData()
 	{
-		return $this->_config;
+		return $this->_data;
 	}
 
 	/**
@@ -51,9 +51,9 @@ class Config
 	 */
 	public function get($key)
 	{
-		$config = $this->getConfig();
+		$data = $this->getConfig();
 		if (array_key_exists($key, $config)) {
-			return $config[$key];
+			return $data[$key];
 		}
 	}
 

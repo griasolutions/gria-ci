@@ -40,10 +40,11 @@ class Dispatcher
 			$controller->respond();
 		} catch (\Exception $ex) {
 			$className = 'ErrorController';
-			if (class_exists('\Application\Controller\Error')) {
-				$className = '\Application\Controller\Error';
+			$applicationClassName = '\Application\Controller\Error';
+			if (class_exists($applicationClassName)) {
+				$className = $applicationClassName;
 			}
-			$this->_controller = (new $className($this->getRequest(), $this->getConfig()))->setException($ex);
+			$this->_controller = new $className($this->getRequest(), $this->getConfig());
 			$this->run();
 		}
 	}

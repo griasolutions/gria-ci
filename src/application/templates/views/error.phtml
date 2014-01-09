@@ -2,5 +2,12 @@
 
 <?php echo $this->renderPartial('error/' . $this->get('statusCode')); ?>
 
+<?php if (ini_get('display_errors')) : ?>
+	<div class="alert">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?php echo $this->get('exception')->getErrorMessage(); ?>
+	</div>
+<?php endif; ?>
+
 <?php echo $this->renderPartial('footer'); ?>
 

@@ -1,7 +1,5 @@
 <?php
 
-if
-
 if (php_sapi_name() !== 'cli-server') {
 	return false;
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace GriaCi\Helper;
+namespace Application\Helper;
 
 use \Application\Model;
 

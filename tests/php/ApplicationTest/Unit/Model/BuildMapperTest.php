@@ -12,9 +12,8 @@ class BuildMapperTest extends \PHPUnit_Framework_TestCase
 
 	public function setUp()
 	{
-		$path = GRIACI_FIXTURE_DIR . '/data/builds.xml';
-		$this->_mapper = new Model\BuildMapper($path);
-		$this->_csvResource = fopen(GRIACI_FIXTURE_DIR . '/data/builds.csv', 'r');
+		$db = new \PDO('sqlite3:tests/fixtures/data/gria-test.db');
+		$this->_mapper = new Model\BuildMapper($db);
 	}
 
 	public function tearDown()

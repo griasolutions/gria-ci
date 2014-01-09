@@ -2,7 +2,7 @@
 namespace Application\Controller;
 
 use \Gria\Controller;
-use \GriaCi\Helper;
+use \Application\Helper;
 
 class Dashboard extends Controller\Controller
 {
