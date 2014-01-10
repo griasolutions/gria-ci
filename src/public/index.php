@@ -9,6 +9,9 @@ set_include_path(implode(PATH_SEPARATOR, array(
 // pull in composer dependencies
 require 'vendor/autoload.php';
 
+// define the application environment
+defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'production');
+
 // run the application
 $path = dirname(dirname(dirname(__FILE__))) . '/config/application.ini';
 (new \Gria\Application\Application($path))->run();

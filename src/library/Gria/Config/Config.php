@@ -25,7 +25,13 @@ class Config
 	{
 		if ($this->_path = realpath($path)) {
 			$ini = new \IniParser($this->_path);
-			$this->_data = $ini->parse();
+			$data = $ini->parse();
+			foreach ($data as $environment => $settings) {
+				if (APPLICATION_ENV == trim($environment)) {
+					$this->_data = $settings;
+					break;
+				}
+			}
 		}
 	}
 
