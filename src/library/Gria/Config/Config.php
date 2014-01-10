@@ -21,17 +21,10 @@ class Config
 	 * @param string $path
 	 * @return \Gria\Config\Config
 	 */
-	public function __construct($path)
+	public function __construct($path = '')
 	{
-		if ($this->_path = realpath($path)) {
-			$ini = new \IniParser($this->_path);
-			$data = $ini->parse();
-			foreach ($data as $environment => $settings) {
-				if (APPLICATION_ENV == trim($environment)) {
-					$this->_data = $settings;
-					break;
-				}
-			}
+		if ($path) {
+			$this->setPath(realpath($path));
 		}
 	}
 
@@ -40,7 +33,24 @@ class Config
 	 */
 	public function getData()
 	{
+		if (!$this->_data) {
+			$data = (new \IniParser($this->getPath()))->parse();
+			foreach ($data as $environment => $settings) {
+				if (APPLICATION_ENV == trim($environment)) {
+					$this->_data = $settings;
+					break;
+				}
+			}
+		}
 		return $this->_data;
+	}
+
+	/**
+	 * @param string $path
+	 */
+	public function setPath($path)
+	{
+		$this->_path = $path;
 	}
 
 	/**

@@ -3,6 +3,7 @@
 namespace GriaTest\Unit\Config;
 
 use \Gria\Config;
+use Gria\Controller\Controller;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,10 +13,22 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 	/** @var \Gria\Config\Config */
 	private $_config;
 
+	/** @var array */
+	private $_fixtureData = array(
+		'test' => array(
+			'application' => 'Application',
+			'answer' => 42,
+			'isTest' => true
+		)
+	);
+
 	public function setUp()
 	{
-		$path = 'tests/fixtures/config/test.ini';
-		$this->_config = new Config\Config($path);
+		$this->getMock('\IniParser', array('parse'))
+			->expects($this->any())
+			->method('parse')
+			->will($this->returnValue($this->getFixtureData()));
+		$this->_config = new Config\Config();
 	}
 
 	public function testGetString()
@@ -35,17 +48,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetConfig()
 	{
-		$expected = new \ArrayObject(array(
-			'application' => 'Application',
-			'answer' => 42,
-			'isTest' => true
-		));
-		$this->assertEquals($expected, $this->getConfig()->getConfig());
+		$this->assertEquals($this->getFixtureData(), $this->getConfig()->getData());
 	}
 
 	public function testGetPath()
 	{
-		$this->assertEquals(realpath('tests/fixtures/config/test.ini'), $this->getConfig()->getPath());
+		$this->assertEquals(realpath('tests/data/test.ini'), $this->getConfig()->getPath());
 	}
 
 	/**
@@ -54,6 +62,14 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 	public function getConfig()
 	{
 		return $this->_config;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getFixtureData()
+	{
+		return $this->_fixtureData;
 	}
 
 } 

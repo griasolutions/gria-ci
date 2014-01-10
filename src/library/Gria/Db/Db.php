@@ -65,52 +65,67 @@ class Db
 
 	public function select($tableName, $fields, array $where = array(), $fetchClassName = '')
 	{
-		$sql = 'SELECT ' . $fields . ' FROM ' . $tableName;
-		if ($where) {
-			$sql .= $this->_buildWhereClauseSql(self::QUERY_SELECT, $where);
-		}
-		if ($fetchClassName) {
-			$statement = new \PDOStatement($sql, \PDO::FETCH_CLASS, $fetchClassName);
-		} else {
-			$statement = new \PDOStatement($sql);
-		}
-		if ($where) {
-			$statement = $this->_bindParamArray($statement, $where);
-		}
-
-		return $statement->fetchAll();
+		return (new Query(Query::QUERY_SELECT))
+			->setFrom($tableName)
+			->setFields($fields)
+			->setWhere($where)
+			->setFetchClassName($fetchClassName)
+			->execute();
 	}
 
 	public function create($tableName, array $data)
 	{
-		$values = implode(',:', array_keys($data));
-		$sql = 'INSERT INTO ' . $tableName . ' values(' . $values . ')';
-		$statement = $this->_bindParamArray(new \PDOStatement($sql), $data);
+		$this->_db->beginTransaction();
+		try {
+			$result = (new Query(Query::QUERY_INSERT))
+				->setTable($tableName)
+				->setData($data)
+				->execute();
+		} catch (\Exception $ex) {
+			$this->_db->rollBack();
 
-		return $statement->execute();
+			return false;
+		}
+		$this->_db->commit();
+
+		return $result;
 	}
 
-	public function update($tableName, $id, array $where = array())
+	public function update($tableName, array $data, array $where = array())
 	{
-		$sql = 'UPDATE ' . $tableName . ' SET ';
-		$setStatements = array_map(function ($value) {
-			return $value . ' = :' . $value;
-		}, array_keys($where));
-		$sql .= implode(',', $setStatements);
-		$sql .= ' WHERE id = :id';
-		$statement = $this->_bindParamArray(
-			new \PDOStatement($sql),
-			array_merge(array('id' => $id), $data)
-		);
+		$this->_db->beginTransaction();
+		try {
+			$result = (new Query(Query::QUERY_UPDATE))
+				->setTable($tableName)
+				->setData($data)
+				->setWhere($where)
+				->execute();
+		} catch (\Exception $ex) {
+			$this->_db->rollBack();
 
-		return $statement->execute();
+			return false;
+		}
+		$this->_db->commit();
+
+		return $result;
 	}
 
 	public function delete($tableName, array $where)
 	{
-		$sql = 'DELETE FROM ' . $tableName . ' WHERE id = :id';
+		$this->_db->beginTransaction();
+		try {
+			$result = (new Query(Query::QUERY_DELETE))
+				->setTable($tableName)
+				->setWhere($where)
+				->execute();
+		} catch (\Exception $ex) {
+			$this->_db->rollBack();
 
-		return (new \PDOStatement($sql))->execute();
+			return false;
+		}
+		$this->_db->commit();
+
+		return $result;
 	}
 
 	/**

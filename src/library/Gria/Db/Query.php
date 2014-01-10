@@ -19,8 +19,11 @@ class Query
 	/** @var array */
 	private $_data = array();
 
+	/** @var array */
+	private $_where = array();
+
 	/** @var string */
-	private $_from;
+	private $_table;
 
 	/** @var int */
 	private $_offset;
@@ -29,11 +32,14 @@ class Query
 	private $_limit;
 
 	/** @var string */
+	private $_fetchClassName;
+
+	/** @var string */
 	private $_sql;
 
 	public function __construct($type)
 	{
-		$this->setType(strtoupper($type));
+		$this->setType($type);
 	}
 
 	/**
@@ -96,17 +102,34 @@ class Query
 	public function getFields()
 	{
 		return $this->_fields;
+	}
+
+	/**
+	 * @param array $where
+	 * @return $this
+	 */
+	public function setWhere($where)
+	{
+		$this->_where = $where;
 
 		return $this;
 	}
 
 	/**
-	 * @param string $from
+	 * @return array
+	 */
+	public function getWhere()
+	{
+		return $this->_where;
+	}
+
+	/**
+	 * @param string $table
 	 * @return $this
 	 */
-	public function setFrom($from)
+	public function setTable($table)
 	{
-		$this->_from = $from;
+		$this->_table = $table;
 
 		return $this;
 	}
@@ -114,9 +137,9 @@ class Query
 	/**
 	 * @return string
 	 */
-	public function getFrom()
+	public function getTable()
 	{
-		return $this->_from;
+		return $this->_table;
 	}
 
 	/**
@@ -158,6 +181,25 @@ class Query
 	}
 
 	/**
+	 * @param string $string
+	 * @return $this
+	 */
+	public function setFetchClassName($string)
+	{
+		$this->_fetchClassName = $string;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFetchClassName()
+	{
+		return $this->_fetchClassName;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getSql()
@@ -174,6 +216,16 @@ class Query
 
 	public function execute()
 	{
+		if ($fetchClassName) {
+			$statement = new \PDOStatement($sql, \PDO::FETCH_CLASS, $fetchClassName);
+		} else {
+			$statement = new \PDOStatement($sql);
+		}
+		if ($where) {
+			$statement = $this->_bindParamArray($statement, $where);
+		}
+
+
 		$statement = $this->_bindParamArray(new \PDOStatement($this->getSql()), $this->getData());
 
 		return $statement->execute();
@@ -181,21 +233,26 @@ class Query
 
 	private function _buildSelectSqlArray()
 	{
-		$sql[] = self::QUERY_SELECT;
+		$sql[] = strtoupper(self::QUERY_SELECT);
 		$sql[] = implode(', ', $this->getFields());
 		$sql[] = 'FROM';
-		$sql[] = $this->getFrom();
+		$sql[] = $this->getTable();
 		$sql[] = $this->_buildWhereClauseSql();
-		$sql[] = 'LIMIT ' . $this->getOffset() . ',' . $this->getLimit();
+		if ($this->getLimit()) {
+			$sql[] = 'LIMIT ' . $this->getLimit();
+		}
+		if ($this->getOffset()) {
+			$sql[] = 'OFFSET ' . $this->getOffset();
+		}
 
 		return $sql;
 	}
 
 	private function _buildInsertSqlArray()
 	{
-		$sql[] = self::QUERY_INSERT;
+		$sql[] = strtoupper(self::QUERY_INSERT);
 		$sql[] = 'INTO';
-		$sql[] = $this->getFrom();
+		$sql[] = $this->getTable();
 		$sql[] = '(' . implode(', ', array_keys($this->getData())) . ')';
 		$sql[] = 'VALUES';
 		$sql[] = '(:' . implode(', :', array_keys($this->getData())) . ')';
@@ -205,10 +262,10 @@ class Query
 
 	private function _buildUpdateSqlArray()
 	{
-		$sql[] = self::QUERY_UPDATE;
-		$sql[] = $this->getFrom();
+		$sql[] = strtoupper(self::QUERY_UPDATE);
+		$sql[] = $this->getTable();
 		$sql[] = 'SET';
-		$sql[] = implode(',', array_map(function ($value) {
+		$sql[] = implode(', ', array_map(function ($value) {
 			return $value . ' = :' . $value;
 		}, array_keys($this->getData())));
 		$sql[] = $this->_buildWhereClauseSql();
@@ -218,9 +275,9 @@ class Query
 
 	private function _buildDeleteSqlArray()
 	{
-		$sql[] = self::QUERY_DELETE;
+		$sql[] = strtoupper(self::QUERY_DELETE);
 		$sql[] = 'FROM';
-		$sql[] = $this->getFrom();
+		$sql[] = $this->getTable();
 		$sql[] = $this->_buildWhereClauseSql();
 
 		return $sql;
@@ -231,7 +288,7 @@ class Query
 		$sql = 'WHERE ';
 		$setStatements = array_map(function ($value) {
 			return $value . ' = :' . $value;
-		}, array_keys($this->getData()));
+		}, array_keys($this->getWhere()));
 		switch ($this->getType()) {
 			case self::QUERY_SELECT:
 			case self::QUERY_DELETE:
