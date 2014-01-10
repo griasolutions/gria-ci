@@ -14,6 +14,9 @@ class BuildMapperTest extends \PHPUnit_Framework_TestCase
 	public function setUp()
 	{
 		$this->_db = Db\Db::getInstance();
+		$sql = file_get_contents('tests/data/build-mapper-test.sql');
+		$statement = $this->_db->query($sql);
+		$statement->execute();
 		$this->_mapper = new Model\BuildMapper($this->_db);
 	}
 

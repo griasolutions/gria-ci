@@ -63,18 +63,54 @@ class Db
 		}
 	}
 
-	/**
-	 * @param \PDOStatement $statement
-	 * @param array $data
-	 * @return \PDOStatement
-	 */
-	public function bindParamArray(\PDOStatement $statement, array $data)
+	public function select($tableName, $fields, array $where = array(), $fetchClassName = '')
 	{
-		foreach ($data as $field => $value) {
-			$statement->bindParam(':' . $field, $value);
+		$sql = 'SELECT ' . $fields . ' FROM ' . $tableName;
+		if ($where) {
+			$sql .= $this->_buildWhereClauseSql(self::QUERY_SELECT, $where);
+		}
+		if ($fetchClassName) {
+			$statement = new \PDOStatement($sql, \PDO::FETCH_CLASS, $fetchClassName);
+		} else {
+			$statement = new \PDOStatement($sql);
+		}
+		if ($where) {
+			$statement = $this->_bindParamArray($statement, $where);
 		}
 
-		return $statement;
+		return $statement->fetchAll();
+	}
+
+	public function create($tableName, array $data)
+	{
+		$values = implode(',:', array_keys($data));
+		$sql = 'INSERT INTO ' . $tableName . ' values(' . $values . ')';
+		$statement = $this->_bindParamArray(new \PDOStatement($sql), $data);
+
+		return $statement->execute();
+	}
+
+	public function update($tableName, $id, array $where = array())
+	{
+		$sql = 'UPDATE ' . $tableName . ' SET ';
+		$setStatements = array_map(function ($value) {
+			return $value . ' = :' . $value;
+		}, array_keys($where));
+		$sql .= implode(',', $setStatements);
+		$sql .= ' WHERE id = :id';
+		$statement = $this->_bindParamArray(
+			new \PDOStatement($sql),
+			array_merge(array('id' => $id), $data)
+		);
+
+		return $statement->execute();
+	}
+
+	public function delete($tableName, array $where)
+	{
+		$sql = 'DELETE FROM ' . $tableName . ' WHERE id = :id';
+
+		return (new \PDOStatement($sql))->execute();
 	}
 
 	/**

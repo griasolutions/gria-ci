@@ -66,9 +66,7 @@ abstract class MapperAbstract implements MapperInterface
 	 */
 	public function findAll($offset = 0, $limit = 0)
 	{
-		$sql = 'SELECT * FROM ' . $this->getTableName();
-		$statement = new \PDOStatement($sql, \PDO::FETCH_CLASS, $this->getModelClassName());
-		return $statement->fetchAll();
+		return $this->getDb()->select($this->getTableName(), '*');
 	}
 
 	/**
@@ -84,10 +82,7 @@ abstract class MapperAbstract implements MapperInterface
 	 */
 	public function findByField($field, $value)
 	{
-		$sql = 'SELECT * FROM ' . $this->getTableName() . ' WHERE ' . $field . ' = :value';
-		$statement = new \PDOStatement($sql, \PDO::FETCH_CLASS, $this->getModelClassName());
-		$statement->bindParam(':value', $value);
-		return $statement->fetchAll();
+		return $this->getDb()->select($this->getTableName(), '*', array($field => $value));
 	}
 
 	/**
@@ -95,11 +90,7 @@ abstract class MapperAbstract implements MapperInterface
 	 */
 	public function create(array $data)
 	{
-		$values = implode(',:', array_keys($data));
-		$sql = 'INSERT INTO ' . $this->getTableName() . ' values(' . $values . ')';
-		$statement = $this->getDb()->bindParamArray(new \PDOStatement($sql), $data);
-
-		return $statement->execute();
+		$this->getDb()->create($this->getTableName(), $data);
 	}
 
 	/**
@@ -107,18 +98,7 @@ abstract class MapperAbstract implements MapperInterface
 	 */
 	public function update($id, array $data)
 	{
-		$sql = 'UPDATE ' . $this->getTableName() . ' SET ';
-		$setStatements = array_map(function ($value) {
-			return $value . ' = :' . $value;
-		}, array_keys($data));
-		$sql .= implode(',', $setStatements);
-		$sql .= ' WHERE id = :id';
-		$statement = $this->getDb()->bindParamArray(
-		new \PDOStatement($sql),
-			array_merge(array('id' => $id), $data)
-		);
-
-		return $statement->execute();
+		return $this->getDb()->update($this->getTableName(), $id, $data);
 	}
 
 	/**
@@ -126,9 +106,12 @@ abstract class MapperAbstract implements MapperInterface
 	 */
 	public function delete($id)
 	{
+		$this->getDb()->delete($this->getTableName(), array('id' => $id));
+		/*
 		$sql = 'DELETE FROM ' . $this->getTableName() . ' WHERE id = :id';
 
 		return (new \PDOStatement($sql))->execute();
+		*/
 	}
 
 } 
