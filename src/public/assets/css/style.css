@@ -83,5 +83,11 @@
 }
 
 #footer {
+    border-top: 1px solid #ddd;
+    padding: 25px 0;
     text-align: center;
+}
+
+#github-logo {
+    height: 50px;
 }

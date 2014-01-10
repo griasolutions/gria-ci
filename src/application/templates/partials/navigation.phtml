@@ -11,13 +11,13 @@
 			<a class="navbar-brand" href="/">Gria/<strong>CI</strong></a>
 		</div>
 		<div class="collapse navbar-collapse">
-			<?php if ($controllerName = $this->get('controllerName')) : ?>
+			<?php if (($controllerName = $this->get('controllerName')) && $controllerName != 'install') : ?>
 				<ul class="nav navbar-nav">
 					<li<?php echo($controllerName == 'dashboard' ? ' class="active"' : ''); ?>>
-						<a href="/dashboard">Dashboard</a>
+					<a href="/dashboard">Dashboard</a>
 					</li>
 					<li<?php echo($controllerName == 'about' ? ' class="active"' : ''); ?>>
-						<a href="/about">About</a>
+					<a href="/about">About</a>
 					</li>
 				</ul>
 				<?php $jobs = (new \Application\Helper\Job($this->getConfig()))->getJobs(); ?>
