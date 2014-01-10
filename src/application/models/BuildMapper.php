@@ -6,5 +6,4 @@ use \Gria\Model;
 
 class BuildMapper extends Model\MapperAbstract
 {
-
-} 
+}

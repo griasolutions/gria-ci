@@ -1,10 +1,4 @@
 <?php
-/**
- * This file is part of the Gria library.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace Application\Model;
 
@@ -16,14 +10,17 @@ class Build implements Model\ModelInterface
 	/** @var int */
 	private $_id;
 
-	/** @var string */
+	/** @var int */
 	private $_jobId;
 
-	/** @var string */
-	private $_trigger;
+	/** @var int */
+	private $_triggerId;
+
+	/** @var int */
+	private $_statusId;
 
 	/** @var string */
-	private $_user;
+	private $_username;
 
 	/** @var string */
 	private $_source;
@@ -34,37 +31,19 @@ class Build implements Model\ModelInterface
 	/** @var \DateTime */
 	private $_endTime;
 
-	/** @var string */
-	private $_status;
-
 	/**
 	 * @param array $data
 	 */
 	public function __construct(array $data)
 	{
 		$this->setId($data['id']);
-		$this->setJobId($data['jobId']);
-		$this->setTrigger($data['trigger']);
+		$this->setJobId($data['job_id']);
+		$this->setTriggerId($data['trigger_id']);
+		$this->setStatusId($data['status_id']);
+		$this->setUsername($data['username']);
 		$this->setSource($data['source']);
-		$this->setStartTime($data['startTime']);
-		$this->setEndTime($data['endTime']);
-		$this->setStatus($data['status']);
-	}
-
-	/**
-	 * @param \DateTime $endTime
-	 */
-	public function setEndTime(\DateTime $endTime)
-	{
-		$this->_endTime = $endTime;
-	}
-
-	/**
-	 * @return \DateTime
-	 */
-	public function getEndTime()
-	{
-		return $this->_endTime;
+		$this->setStartTime($data['start_time']);
+		$this->setEndTime($data['end_time']);
 	}
 
 	/**
@@ -84,7 +63,7 @@ class Build implements Model\ModelInterface
 	}
 
 	/**
-	 * @param string $jobId
+	 * @param int $jobId
 	 */
 	public function setJobId($jobId)
 	{
@@ -92,11 +71,59 @@ class Build implements Model\ModelInterface
 	}
 
 	/**
-	 * @return string
+	 * @return int
 	 */
 	public function getJobId()
 	{
 		return $this->_jobId;
+	}
+
+	/**
+	 * @param int $statusId
+	 */
+	public function setStatusId($statusId)
+	{
+		$this->_statusId = $statusId;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getStatus()
+	{
+		return $this->_statusId;
+	}
+
+	/**
+	 * @param int $triggerId
+	 */
+	public function setTriggerId($triggerId)
+	{
+		$this->_triggerId = $triggerId;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getTriggerId()
+	{
+		return $this->_triggerId;
+	}
+
+	/**
+	 * @param string $username
+	 */
+	public function setUsername($username)
+	{
+		$this->_username = $username;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getUsername()
+	{
+		return $this->_username;
 	}
 
 	/**
@@ -132,51 +159,19 @@ class Build implements Model\ModelInterface
 	}
 
 	/**
-	 * @param string $status
+	 * @param \DateTime $endTime
 	 */
-	public function setStatus($status)
+	public function setEndTime(\DateTime $endTime)
 	{
-		$this->_status = $status;
+		$this->_endTime = $endTime;
 	}
 
 	/**
-	 * @return string
+	 * @return \DateTime
 	 */
-	public function getStatus()
+	public function getEndTime()
 	{
-		return $this->_status;
-	}
-
-	/**
-	 * @param string $trigger
-	 */
-	public function setTrigger($trigger)
-	{
-		$this->_trigger = $trigger;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getTrigger()
-	{
-		return $this->_trigger;
-	}
-
-	/**
-	 * @param string $user
-	 */
-	public function setUser($user)
-	{
-		$this->_user = $user;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUser()
-	{
-		return $this->_user;
+		return $this->_endTime;
 	}
 
 } 

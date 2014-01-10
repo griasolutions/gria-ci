@@ -3,22 +3,23 @@
 namespace ApplicationTest\Unit\Model;
 
 use \Application\Model;
+use \Gria\Db;
 
 class BuildMapperTest extends \PHPUnit_Framework_TestCase
 {
 
+	private $_db;
 	private $_mapper;
-	private $_csvResource;
 
 	public function setUp()
 	{
-		$db = new \PDO('sqlite3:tests/fixtures/data/gria-test.db');
-		$this->_mapper = new Model\BuildMapper($db);
+		$this->_db = Db\Db::getInstance();
+		$this->_mapper = new Model\BuildMapper($this->_db);
 	}
 
 	public function tearDown()
 	{
-		fclose($this->getBuildCsvResource());
+		unset($this->_db);
 	}
 
 	public function testFindAll()
@@ -58,9 +59,9 @@ class BuildMapperTest extends \PHPUnit_Framework_TestCase
 		return $this->_mapper;
 	}
 
-	public function getBuildCsvResource()
+	public function getDb()
 	{
-		return $this->_csvResource;
+		return $this->_db;
 	}
 
 } 
