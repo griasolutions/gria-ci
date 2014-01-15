@@ -2,6 +2,7 @@
 	"name": "griasolutions/gria-ci",
 	"require": {
 		"php": ">=5.4.0",
+		"griasolutions/gria-ci": "dev-master",
 		"knplabs/github-api": "@dev",
 		"austinhyde/iniparser": "@dev",
 		"squizlabs/php_codesniffer": "1.*",
@@ -13,17 +14,12 @@
 	},
 	"prefer-stable": true,
 	"autoload": {
-		"psr-0": {
-			"Gria\\": "src/library/",
-			"GriaCi\\": "src/library/",
-			"GriaTest\\": "tests/php/",
-			"GriaCiTest\\": "tests/php/",
-			"ApplicationTest\\": "tests/php/"
-		},
 		"psr-4": {
+			"GriaCi\\": "src/library/",
 			"Application\\Controller\\": "src/application/controllers/",
 			"Application\\Helper\\": "src/application/helpers/",
-			"Application\\Model\\": "src/application/models/"
+			"Application\\Model\\": "src/application/models/",
+			"ApplicationTest\\": "tests/php/"
 		}
 	}
 }
