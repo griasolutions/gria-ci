@@ -1,8 +1,15 @@
 {
 	"name": "griasolutions/gria-ci",
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"url": "https://github.com/griasolutions/gria-lib.git",
+			"type": "git"
+		}
+	],
 	"require": {
 		"php": ">=5.4.0",
-		"griasolutions/gria-ci": "dev-master",
+		"griasolutions/gria-lib": "@dev",
 		"knplabs/github-api": "@dev",
 		"austinhyde/iniparser": "@dev",
 		"squizlabs/php_codesniffer": "1.*",
@@ -12,7 +19,6 @@
 		"mikey179/vfsStream": "*",
 		"icanboogie/inflector": "dev-master"
 	},
-	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"GriaCi\\": "src/library/",
